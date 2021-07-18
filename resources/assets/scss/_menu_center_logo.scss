@@ -58,11 +58,17 @@
   margin-bottom: 0;
   padding: 0 15px;
   min-height: 70px;
+  background-color: $dark;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 999;
 
   .nav-link {
     padding: 0;
     line-height: 70px;
-    color: rgba($dark,0.8);
+    color: $bg-leftbar-menu-color;
   }
 
   .dropdown-toggle {
@@ -75,11 +81,23 @@
     overflow: hidden;
   }
 
+  .logo-box {
+    line-height: 70px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    -ms-transform: translate(-50%,0);
+    -o-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+  }
+
   .topbar-right-menu {
     li {
       float: left;
     }
   }
+
 }
 
 .logo {
@@ -157,14 +175,14 @@
   min-height: 80vh;
 
   .content {
-    margin-top: 20px;
+    margin-top: 90px;
   }
 
 }
 
 .button-menu-mobile {
   border: none;
-  color: $dark;
+  color: $bg-leftbar-menu-color;
   display: inline-block;
   height: 70px;
   width: 60px;
@@ -285,10 +303,7 @@
 }
 .enlarged #wrapper {
   #sidebar-menu {
-    .menu-title, .menu-arrow, .label, .badge {
-      display: none !important;
-    }
-    .collapse.in {
+    .menu-title, .menu-arrow, .label, .badge,.collapse.in {
       display: none !important;
     }
     .nav.collapse {
@@ -308,6 +323,7 @@
   .left.side-menu {
     width: 70px;
     z-index: 5;
+    padding-top: 70px;
 
     #sidebar-menu > ul > li > a {
       padding: 15px 20px;
@@ -469,29 +485,33 @@
     line-height: 34px;
     width: 34px;
     text-align: center;
-    color: rgba($dark, 0.5);
+    color: $bg-leftbar-menu-color;
     background-color: transparent;
     border: none;
 
     &:hover {
-      color: $dark;
+      color: $white;
     }
   }
 
   .form-control,
   .form-control:focus {
-    border: 1px solid $light;
+    border: 1px solid lighten($dark,7%);
     font-size: 13px;
     height: 34px;
-    color: $dark;
+    color: $white;
     padding-left: 20px;
     padding-right: 40px;
-    background: $light;
+    background: lighten($dark,7%);
     box-shadow: none;
     border-radius: 30px;
     width: 200px;
   }
 }
+
+
+
+
 
 
 /* Body min-height set */
@@ -683,14 +703,7 @@ body.enlarged.bg-transparent {
       padding-top: 70px;
     }
   }
-  .navbar-custom {
-    background-color: $white;
-    position: fixed;
-    left: 0;
-    right: 0;
-    box-shadow: $shadow;
-    z-index: 999;
-  }
+
   .page-title-box {
     .page-title {
       font-size: 16px;
@@ -704,6 +717,12 @@ body.enlarged.bg-transparent {
     .breadcrumb {
       display: none;
     }
+  }
+  .logo-box {
+    position: relative !important;
+    float: left;
+    left: 0 !important;
+    transform: translate(0,0) !important;
   }
 }
 
@@ -745,6 +764,7 @@ body.enlarged.bg-transparent {
 }
 
 @media (max-width: 767px) {
+
   .dropdown-lg {
     width: 200px !important;
   }
@@ -770,6 +790,9 @@ body.enlarged.bg-transparent {
 
   .search-bar {
     display: none !important;
+  }
+  .logo-box {
+    display: none;
   }
 }
 
@@ -848,4 +871,10 @@ body.enlarged.bg-transparent {
 
 }
 
+
+.page-title {
+  color: $bg-leftbar-menu-color;
+  margin: 0 !important;
+  line-height: 70px;
+}
 
