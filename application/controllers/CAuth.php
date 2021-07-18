@@ -24,8 +24,12 @@ class CAuth extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->library('form_validation');
-    $this->load->model('MAuth', 'ma');
+    if (!empty($this->session->userdata('token'))) {
+      header('location: ' . base_url('inicio') . '');
+    } else {
+      $this->load->library('form_validation');
+      $this->load->model('MAuth', 'ma');
+    }
   }
 
   public function loginView()
@@ -76,11 +80,13 @@ class CAuth extends CI_Controller
         switch ($dataRespuesta["status"]) {
           case '0':
             //Cuenta no encontrada
+            setcookie('auth', '', time() - 1, "/");
             $this->output->set_status_header(500)
               ->set_content_type('application/json')
               ->set_output(json_encode(['message' => 'La cuenta no existe']));
             break;
           case '-1':
+            setcookie('auth', '', time() - 1, "/");
             $this->output->set_status_header(401)
               ->set_content_type('application/json')
               ->set_output(json_encode(['message' => 'Contraseña incorrecta']));
@@ -93,6 +99,7 @@ class CAuth extends CI_Controller
             break;
 
           default:
+            setcookie('auth', '', time() - 1, "/");
             $this->output->set_status_header(500)
               ->set_content_type('application/json')
               ->set_output(json_encode(['message' => 'Error interno']));
@@ -214,6 +221,27 @@ class CAuth extends CI_Controller
     } else {
       $this->output->set_status_header(404);
     }
+  }
+
+  public function cerrarSesion()
+  {
+    $userData = [
+      'nombres' => '',
+      'apellidos' => '',
+      'correo' => '',
+      'usuario' => '',
+      'telefono' => '',
+      'tipo' => '',
+      'token' => '',
+      'activo' => ''
+    ];
+    $this->session->set_userdata($userData);
+    $this->session->sess_destroy();
+    header('location:' . base_url() . '');
+  }
+  public function generarToken()
+  {
+    echo sha1(123456789);
   }
 }
 
