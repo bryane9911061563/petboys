@@ -30,20 +30,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group row m-b-20">
-                        <div class="col-12">
-                            <label for="password">Contraseña</label>
-                            <input class="form-control" type="password" id="password" name="password" placeholder="Ingresa tu contraseña">
-                        </div>
-                    </div>
-
-                    <div class="form-group row m-b-20">
-                        <div class="col-12">
-                            <label for="password">Confirmar Contraseña</label>
-                            <input class="form-control" type="password" id="password2" name="password2" placeholder="Confirma tu contraseña">
-                        </div>
-                    </div> -->
-
                     <div class="form-group row m-b-20">
                         <div class="col-12">
                             <label for="tipo">Registrarme como</label>
@@ -103,13 +89,8 @@
 
             },
             error: function(jqXHR) {
+                var resp = jqXHR.responseJSON;
                 switch (jqXHR.status) {
-                    case 500:
-
-                        break;
-                    case 401:
-
-                        break;
                     case 400:
 
                         break;

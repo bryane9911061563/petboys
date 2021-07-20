@@ -15,7 +15,7 @@
                     <div class="form-group m-b-20 row">
                         <div class="col-12">
                             <label for="emailaddress">Correo electrónico</label>
-                            <input class="form-control" type="email" name="emailaddress" id="emailaddress" required="" placeholder="ejem: meemail@email.com">
+                            <input class="form-control" type="email" name="emailaddress" id="emailaddress" placeholder="ejem: meemail@email.com">
                         </div>
                     </div>
 
@@ -23,7 +23,7 @@
                         <div class="col-12">
                             <a href="page-recoverpw.html" class="text-muted float-right"><small>Olvidaste tu contraseña?</small></a>
                             <label for="password">Contraseña</label>
-                            <input class="form-control" type="password" required="" name="password" id="password" placeholder="Ingresa tu contraseña">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Ingresa tu contraseña">
                         </div>
                     </div>
 
@@ -67,21 +67,34 @@
             data: $(this).serialize(),
             dataType: "json",
             success: function(response) {
+                $.toast({
+                    heading: 'Bienvenido!',
+                    text: 'En un momento se te redireccionara a tu panel',
+                    showHideTransition: 'slide',
+                    icon: 'success'
+                })
                 window.location.replace("<?= base_url('inicio') ?>");
             },
             error: function(jqXHR) {
+                var resp = jqXHR.responseJSON;
                 switch (jqXHR.status) {
-                    case 500:
-
-                        break;
-                    case 401:
-
-                        break;
                     case 400:
+                        $.toast({
+                            heading: 'Campos incompletos',
+                            text: `${(resp['correo']!='')?resp['correo']:''}\n${(resp['password']!='')?resp['password']:''}`,
+                            showHideTransition: 'fade',
+                            icon: 'error'
+                        })
 
                         break;
 
                     default:
+                        $.toast({
+                            heading: 'Oops!',
+                            text: `${jqXHR.responseJSON['message']}`,
+                            showHideTransition: 'fade',
+                            icon: 'error'
+                        })
                         break;
                 }
             }

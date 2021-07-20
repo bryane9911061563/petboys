@@ -17,6 +17,9 @@
     <link href="<?= base_url('resources/assets/css/icons.css"') ?> rel=" stylesheet" type="text/css" />
     <link href="<?= base_url('resources/assets/css/style.css"') ?> rel=" stylesheet" type="text/css" />
 
+    <!-- Toastr css -->
+    <link rel="stylesheet" href="<?= base_url('resources/plugins/jquery-toastr/jquery.toast.min.css') ?>" type="text/css">
+
     <script src="<?= base_url('resources/assets/js/modernizr.min.js') ?>"></script>
 
     <!-- jQuery  -->
@@ -24,6 +27,9 @@
     <script src="<?= base_url('resources/assets/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= base_url('resources/assets/js/waves.js') ?>"></script>
     <script src="<?= base_url('resources/assets/js/jquery.slimscroll.js') ?>"></script>
+
+    <!-- TOASTR js -->
+    <script src="<?= base_url('resources/plugins/jquery-toastr/jquery.toast.min.js') ?>"></script>
 
     <!-- App js -->
     <script src="<?= base_url('resources/assets/js/jquery.core.js') ?>"></script>
