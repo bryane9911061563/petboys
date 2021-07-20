@@ -49,9 +49,7 @@
                             <label for="tipo">Registrarme como</label>
                             <select class="form-control" name="tipo" id="tipo">
                                 <option value="">Tipo de usuario</option>
-                                <option value="1">Hospital</option>
                                 <option value="2">Veterinario</option>
-                                <option value="3">Farmacia</option>
                                 <option value="4">Usuario</option>
                             </select>
                         </div>
