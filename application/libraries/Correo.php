@@ -19,7 +19,7 @@ class Correo
   /* -MENSAJE:  __puede ser un html con la estructura del correo
   /* -CORREO:   __correo destinatario
   */
-    public function enviar_correo($link, $correo_dest)
+    public function enviar_correo($correo_dest, $token)
     {
 
         $mail = new PHPMailer(true);
@@ -37,75 +37,181 @@ class Correo
             $mail->setFrom(EMAIL_SENDER, 'ZombiWifi');
             $mail->addAddress($correo_dest);
 
-            $mail->Subject = 'Reestablecer contraseña';
+            $mail->Subject = 'Confirmar cuenta';
             $mail->isHTML(true);
             $mail->Body = '
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+            <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                <html xmlns="http://www.w3.org/1999/xhtml" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="icon" type="image/png" sizes="16x16" href="' . base_url() . 'assets/images/favicon.png">
-    <title>Zombifi</title>
-</head>
+                <head>
+                    <meta name="viewport" content="width=device-width" />
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <title>Petboys</title>
 
-<body style="margin:0px; background: #f8f8f8; ">
-    <div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
-        <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
-            <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
-                <tbody>
-                    <tr>
-                        <td style="vertical-align: top; padding-bottom:30px;" align="center"><a href="' . base_url() . '" target="_blank"><img height="55" src="' . base_url() . 'recursos_metrica/assets/images/zombicon.svg"
-alt="xtreme admin" style="border:none"><br /></a> 
-<img src="' . base_url() . 'recursos_metrica/assets/images/zmb2.png"
-alt="logo-large" class="logo-lg logo-dark" style="width:107px;height:22px">
-</td>
-</tr>
-</tbody>
-</table>
-<div style="padding: 40px; background: #fff;">
-    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
-        <tbody>
-            <tr>
-                <td style="border-bottom:1px solid #f6f6f6;">
-                    <h1 style="font-size:14px; font-family:arial; margin:0px; font-weight:bold;">Dear
-                        Sir/Madam/Customer,</h1>
-                    <p style="margin-top:0px; color:#bbbbbb;">Here are your password reset instructions.</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:10px 0 30px 0;">
-                    <p>A request to reset your Admin password has been made. If you did not make this request, simply
-                        ignore this email. If you did make this request, please reset your password:</p>
-                    <center>
-                        <a href="' . $link . '"
-                            style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #4fc3f7; border-radius: 60px; text-decoration:none;">Reestablecer
-                            contraseña</a>
-                    </center>
-                    <b>- Thanks (Wrappixel team)</b>
-                </td>
-            </tr>
-            <tr>
-                <td style="border-top:1px solid #f6f6f6; padding-top:20px; color:#777">If the button above does not
-                    work, try copying and pasting the URL into your browser. If you continue to have problems, please
-                    feel free to contact us at info@themedesigner.in</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
-    <p> Powered by Wrappixel
-        <br>
-        <a href="javascript: void(0);" style="color: #b2b2b5; text-decoration: underline;">Unsubscribe</a>
-    </p>
-</div>
-</div>
-</div>
-</body>
 
-</html>
-';
+                    <style type="text/css">
+                        img {
+                            max-width: 100%;
+                        }
+
+                        body {
+                            -webkit-font-smoothing: antialiased;
+                            -webkit-text-size-adjust: none;
+                            width: 100% !important;
+                            height: 100%;
+                            line-height: 1.6em;
+                        }
+
+                        body {
+                            background-color: #f6f6f6;
+                        }
+
+                        @media only screen and (max-width: 640px) {
+                            body {
+                                padding: 0 !important;
+                            }
+
+                            h1 {
+                                font-weight: 800 !important;
+                                margin: 20px 0 5px !important;
+                            }
+
+                            h2 {
+                                font-weight: 800 !important;
+                                margin: 20px 0 5px !important;
+                            }
+
+                            h3 {
+                                font-weight: 800 !important;
+                                margin: 20px 0 5px !important;
+                            }
+
+                            h4 {
+                                font-weight: 800 !important;
+                                margin: 20px 0 5px !important;
+                            }
+
+                            h1 {
+                                font-size: 22px !important;
+                            }
+
+                            h2 {
+                                font-size: 18px !important;
+                            }
+
+                            h3 {
+                                font-size: 16px !important;
+                            }
+
+                            .container {
+                                padding: 0 !important;
+                                width: 100% !important;
+                            }
+
+                            .content {
+                                padding: 0 !important;
+                            }
+
+                            .content-wrap {
+                                padding: 10px !important;
+                            }
+
+                            .invoice {
+                                width: 100% !important;
+                            }
+                        }
+                    </style>
+                </head>
+
+                <body
+                    style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em; background-color: #f6f6f6; margin: 0;"
+                    bgcolor="#f6f6f6">
+
+                    <table class="body-wrap"
+                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;"
+                        bgcolor="#f6f6f6">
+                        <tr
+                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                            <td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;"
+                                valign="top"></td>
+                            <td class="container" width="600"
+                                style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;"
+                                valign="top">
+                                <div class="content"
+                                    style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">
+                                    <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope
+                                        itemtype="http://schema.org/ConfirmAction"
+                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; margin: 0; border: none;">
+                                        <tr
+                                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                            <td class="content-wrap"
+                                                style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;padding: 30px;border: 3px solid #777edd;border-radius: 7px; background-color: #fff;"
+                                                valign="top">
+                                                <meta itemprop="name" content="Confirm Email"
+                                                    style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" />
+                                                <table width="100%" cellpadding="0" cellspacing="0"
+                                                    style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                    <tr>
+                                                        <td style="text-align: center">
+                                                            <a href="#" style="display: block;margin-bottom: 10px;"> <img
+                                                                    src="../assets/images/logo.png" height="28" alt="logo" /></a> <br />
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                        <td class="content-block"
+                                                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
+                                                            valign="top">
+                                                            Por favor confirme su direccion de correo electrónico haciendo click en el
+                                                            enlace de abajo.
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                        <td class="content-block" itemprop="handler" itemscope
+                                                            itemtype="http://schema.org/HttpActionHandler"
+                                                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
+                                                            valign="top">
+                                                            <a href="' . base_url() . 'confirmacion/cuenta?auth=' . $token . '&email=' . $correo_dest . '" class="btn-primary" itemprop="url"
+                                                                style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #02c0ce; margin: 0; border-color: #02c0ce; border-style: solid; border-width: 8px 16px;">Confirmra
+                                                                correo electrónico</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                        <td class="content-block"
+                                                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
+                                                            valign="top">
+                                                            &mdash; <b>Petboys</b> - Equipo de soporte
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="footer"
+                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">
+                                        <table width="100%"
+                                            style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                            <tr
+                                                style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td class="aligncenter content-block"
+                                                    style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;"
+                                                    align="center" valign="top"><a href="#"
+                                                        style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;">Unsubscribe</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;"
+                                valign="top"></td>
+                        </tr>
+                    </table>
+                </body>
+
+                </html>';
 
             $mail->send();
 

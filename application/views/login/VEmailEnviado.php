@@ -61,7 +61,7 @@
                         </g>
                     </svg>
 
-                    <p class="text-muted font-14 mt-2"> Un correo fue enviado a <b>youremail@domain.com</b>.
+                    <p class="text-muted font-14 mt-2"> Un correo fue enviado a <b><?= $email ?></b>.
                         Por favor verifique su bandeja de correo y complete su registro. </p>
 
                     <a href="<?= base_url() ?>" class="btn btn-md btn-block btn-custom waves-effect waves-light mt-3">Regresar al inicio</a>

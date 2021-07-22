@@ -54,5 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['registro'] = 'CAuth/singupView';
+$route['registro/finalizar'] = 'CAuth/finalizarRegistroView';
+$route['correoenviado'] = 'CAuth/emailenviadoView';
+$route['confirmacion/cuenta'] = 'CAuth/confirmarCuenta';
 
 $route['inicio'] = 'CAdmin/inicioView';

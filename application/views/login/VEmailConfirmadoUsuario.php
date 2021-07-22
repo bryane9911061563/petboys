@@ -15,38 +15,32 @@
                     <div class="form-group m-b-20 row">
                         <div class="col-12">
                             <label for="emailaddress">Correo electrónico</label>
-                            <input class="form-control" type="email" name="emailaddress" id="emailaddress" placeholder="ejem: meemail@email.com">
+                            <p><b id="emailaddress" name="emailaddress"><?= $correo ?></b></p>
+                            <input type="hidden" name="token" value="<?= $token ?>">
                         </div>
                     </div>
 
                     <div class="form-group row m-b-20">
                         <div class="col-12">
-                            <a href="page-recoverpw.html" class="text-muted float-right"><small>Olvidaste tu contraseña?</small></a>
                             <label for="password">Contraseña</label>
-                            <input class="form-control" type="password" name="password" id="password" placeholder="Ingresa tu contraseña">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row m-b-20">
                         <div class="col-12">
-
-
+                            <label for="password">Confirmar contraseña</label>
+                            <input class="form-control" type="password" name="password2" id="password2" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row text-center m-t-10">
                         <div class="col-12">
-                            <button class="btn btn-block btn-custom waves-effect waves-light" type="submit">Iniciar sesión</button>
+                            <button class="btn btn-block btn-custom waves-effect waves-light" type="submit">Finalizar registro</button>
                         </div>
                     </div>
 
                 </form>
-
-                <div class="row m-t-50">
-                    <div class="col-sm-12 text-center">
-                        <p class="text-muted">No tienes cuenta? <a href="<?= base_url('registro') ?>" class="text-dark m-l-5"><b>Registrate</b></a></p>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -63,7 +57,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?= base_url('CAuth/iniciarSesion') ?>",
+            url: "<?= base_url('CAuth/finalizarRegistro') ?>",
             data: $(this).serialize(),
             dataType: "json",
             success: function(response) {
@@ -79,8 +73,10 @@
                 var resp = jqXHR.responseJSON;
                 switch (jqXHR.status) {
                     case 400:
-                        if (resp["correo"] != '') <?= errorToast('${resp["correo"]}', 'Campo requerido') ?>
+                        if (resp["token"] != '') <?= errorToast('${resp["token"]}', 'Campo requerido') ?>
+                        if (resp["emailaddress"] != '') <?= errorToast('${resp["emailaddress"]}', 'Campo requerido') ?>
                         if (resp["password"] != '') <?= errorToast('${resp["password"]}', 'Campo requerido') ?>
+                        if (resp["password2"] != '') <?= errorToast('${resp["password2"]}', 'Campo requerido') ?>
                         break;
 
                     default:

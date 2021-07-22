@@ -86,16 +86,21 @@
             data: $(this).serialize(),
             dataType: "json",
             success: function(response) {
-
+                window.location.replace("<?= base_url() ?>correoenviado?email=" + $("#emailaddress").val() + "");
             },
             error: function(jqXHR) {
                 var resp = jqXHR.responseJSON;
+                console.log(resp);
                 switch (jqXHR.status) {
                     case 400:
-
+                        if (resp["nombre"] != '') <?= errorToast('${resp["nombre"]}', 'Campo requerido') ?>
+                        if (resp["apellidos"] != '') <?= errorToast('${resp["apellidos"]}', 'Campo requerido') ?>
+                        if (resp["emailaddress"] != '') <?= errorToast('${resp["emailaddress"]}', 'Campo requerido') ?>
+                        if (resp["tipo"] != '') <?= errorToast('${resp["tipo"]}', 'Campo requerido') ?>
                         break;
 
                     default:
+                        <?= errorToast('${resp["message"]}') ?>
                         break;
                 }
             }

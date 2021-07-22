@@ -78,6 +78,64 @@ class MAuth extends CI_Model
     return $this->db->insert_id();
   }
 
+  public function finalizarRegistro($password, $correo)
+  {
+    $this->db->update('USUARIOS', ['vContrasenia' => sha1($password), 'iActivo' => 1], ['vCorreo' => $correo]);
+  }
+
+  public function verificarEstadoDeCuenta($correo)
+  {
+    $this->db->where('vCorreo', $correo);
+    $this->db->select('iActivo');
+    $this->db->from('USUARIOS');
+    $getUs = $this->db->get();
+    if ($getUs->num_rows() > 0) {
+      $rUs = $getUs->row();
+      $iActivo = $rUs->iActivo;
+      return $iActivo;
+    } else {
+      return false;
+    }
+  }
+
+  public function verificarToken($correo, $token)
+  {
+    $this->db->where('vCorreo', $correo);
+    $this->db->select('vToken');
+    $this->db->from('USUARIOS');
+    $getUsuarios = $this->db->get();
+    if ($getUsuarios->num_rows() > 0) {
+
+      $rUs = $getUsuarios->row();
+      $token_bd = $rUs->vToken;
+
+      if ($token == $token_bd) {
+        $this->db->where('vCorreo', $correo);
+        $this->db->update('USUARIOS', ['iActivo' => -1]);
+
+        return '1';
+      } else {
+        //El token no es valido
+        return '-1';
+      }
+    } else {
+      //No se encontró la cuenta propietaria
+      return '0';
+    }
+  }
+
+  public function verificarTokenRule($token, $correo)
+  {
+    $this->db->where('vCorreo', $correo);
+    $this->db->where('vToken', $token);
+    $nrToken = $this->db->get('USUARIOS')->num_rows();
+    if ($nrToken > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // ------------------------------------------------------------------------
 
 }
