@@ -15,7 +15,8 @@
                     <div class="form-group m-b-20 row">
                         <div class="col-12">
                             <label for="emailaddress">Correo electrónico</label>
-                            <p><b id="emailaddress" name="emailaddress"><?= $correo ?></b></p>
+                            <p><b><?= $correo ?></b></p>
+                            <input type="hidden" name="emailaddress" value="<?= $correo ?>">
                             <input type="hidden" name="token" value="<?= $token ?>">
                         </div>
                     </div>
@@ -80,6 +81,7 @@
                         break;
 
                     default:
+                        console.log(resp);
                         <?= errorToast('${resp["message"]}') ?>
                         break;
                 }

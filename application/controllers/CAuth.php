@@ -87,20 +87,21 @@ class CAuth extends CI_Controller
         $dataRespuesta = $this->ma->iniciarSesion($email, $password);
 
         switch ($dataRespuesta["status"]) {
-          case '0':
+          case 0:
             //Cuenta no encontrada
             setcookie('auth', '', time() - 1, "/");
             $this->output->set_status_header(500)
               ->set_content_type('application/json')
               ->set_output(json_encode(['message' => 'La cuenta no existe']));
             break;
-          case '-1':
+          case -1:
             setcookie('auth', '', time() - 1, "/");
+
             $this->output->set_status_header(401)
               ->set_content_type('application/json')
               ->set_output(json_encode(['message' => 'Contraseña incorrecta']));
             break;
-          case '1':
+          case 1:
             setcookie('auth', $dataRespuesta['token'], time() + 60 * 60 * 24 * 31, "/");
             $this->output->set_status_header(200)
               ->set_content_type('application/json')
@@ -152,7 +153,7 @@ class CAuth extends CI_Controller
         [
           'field' => 'emailaddress',
           'label' => 'Correo electrónico',
-          'rules' => 'required|valid_email|is_unique[USUARIOS.vCorreo]',
+          'rules' => 'required|valid_email|is_unique[USUARIOS.v_correo]',
           'errors' => [
             'required' => '%s requerido',
             'valid_email' => '%s invalido',
@@ -176,19 +177,18 @@ class CAuth extends CI_Controller
         $nombre = $this->input->post('nombre', true);
         $apellidos = $this->input->post('apellidos', true);
         $correo = $this->input->post('emailaddress', true);
-        $password = $this->input->post('password', true);
         $tipo = $this->input->post('tipo', true);
 
         $token = sha1(uniqid(rand(), true));
 
         $datos = [
-          'vNombres' => $nombre,
-          'vApellidos' => $apellidos,
-          'vCorreo' => $correo,
-          //'vContrasenia' => sha1($password),
-          'iTipoUsuario' => $tipo,
-          'iActivo' => 0,
-          'vToken' => $token
+          'v_nombres' => $nombre,
+          'v_apellidos' => $apellidos,
+          'v_correo' => $correo,
+          //'vcontrasenia' => sha1($password),
+          'i_tipousuario' => $tipo,
+          'i_activo' => 0,
+          'v_token' => $token
         ];
 
         $insert = $this->ma->registrarUsuario($datos);
@@ -244,20 +244,20 @@ class CAuth extends CI_Controller
       $respVerificado = $this->ma->verificarToken($email, $token);
 
       switch ($respVerificado) {
-        case '1':
-          header('location: ' . base_url() . '');
-          break;
-        case '-1':
+        case 1:
           $data = ['correo' => $email, 'token' => $token];
           $this->template->set('titulo', 'Registro');
           $this->template->load('loginLayout/loginLayout', 'content', 'login/VEmailConfirmadoUsuario', $data);
           break;
-        case '0':
+        case -1:
+          echo $token;
+          break;
+        case 0:
           show_404();
           break;
 
         default:
-          show_404();
+          var_dump($respVerificado);
           break;
       }
     } else {
@@ -268,36 +268,38 @@ class CAuth extends CI_Controller
   public function finalizarRegistro()
   {
     if ($this->input->is_ajax_request()) {
-      $this->form_validation->set_rules('token', 'required|callback_verificartoken');
-      $this->form_validation->set_rules('emailaddress', 'required|valid_email');
+      $this->form_validation->set_rules('token', 'Token', 'required|callback_verificartoken');
+      $this->form_validation->set_rules('emailaddress', 'Correo electronico', 'required|valid_email');
       $this->form_validation->set_rules('password', 'Contraseña', 'required|min_length[6]');
       $this->form_validation->set_rules('password2', 'Confirmar contraseña', 'required|matches[password]');
 
       if ($this->form_validation->run()) {
 
-        $correo = $this->input->post('emailaddress');
+        $correo = $this->input->post('emailaddress', true);
         $token = $this->input->post('token', true);
         $password = $this->input->post('password', true);
 
-        if ($resp = $this->ma->finalizarRegistro($password, $correo)) {
+        $resp = $this->ma->finalizarRegistro($password, $correo, $token);
+
+        if ($resp == true) {
 
           $dataRespuesta = $this->ma->iniciarSesion($correo, $password);
 
           switch ($dataRespuesta["status"]) {
-            case '0':
+            case 0:
               //Cuenta no encontrada
               setcookie('auth', '', time() - 1, "/");
               $this->output->set_status_header(500)
                 ->set_content_type('application/json')
-                ->set_output(json_encode(['message' => 'La cuenta no existe']));
+                ->set_output(json_encode(['message' => 'La cuenta no fue encontrada', 'resp' => $resp]));
               break;
-            case '-1':
+            case -1:
               setcookie('auth', '', time() - 1, "/");
               $this->output->set_status_header(401)
                 ->set_content_type('application/json')
-                ->set_output(json_encode(['message' => 'Contraseña incorrecta']));
+                ->set_output(json_encode(['message' => 'Contraseña incorrecta', 'password' => sha1($password)]));
               break;
-            case '1':
+            case 1:
               setcookie('auth', $dataRespuesta['token'], time() + 60 * 60 * 24 * 31, "/");
               $this->output->set_status_header(200)
                 ->set_content_type('application/json')
@@ -313,7 +315,8 @@ class CAuth extends CI_Controller
           }
         } else {
           $this->output->set_status_header(500)->set_content_type('application/json')->set_output(json_encode([
-            'message' => $resp
+            'message' => $resp,
+            'procesoFinalizacionDeRegistro' => 1
           ]));
         }
       } else {
