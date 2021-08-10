@@ -44,7 +44,7 @@
 
                 <div class="row m-t-50">
                     <div class="col-sm-12 text-center">
-                        <p class="text-muted">No tienes cuenta? <a href="<?= base_url('registro') ?>" class="text-dark m-l-5"><b>Registrate</b></a></p>
+                        <p class="text-muted">No tienes cuenta? <a href="<?= base_url('registro') ?>" onclick="block()" class="text-dark m-l-5"><b>Registrate</b></a></p>
                     </div>
                 </div>
 
@@ -55,11 +55,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-
-    });
-
     $("#fLogin").submit(function(e) {
+        <?= Block() ?>
         e.preventDefault();
         $.ajax({
             type: "POST",
@@ -74,8 +71,10 @@
                     icon: 'success'
                 })
                 window.location.replace("<?= base_url('inicio') ?>");
+                <?= Block('hide') ?>
             },
             error: function(jqXHR) {
+                <?= Block('hide') ?>
                 var resp = jqXHR.responseJSON;
                 switch (jqXHR.status) {
                     case 400:
@@ -90,4 +89,8 @@
             }
         });
     });
+
+    function block() {
+        <?= Block() ?>
+    }
 </script>

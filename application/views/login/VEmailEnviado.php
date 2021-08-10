@@ -64,7 +64,7 @@
                     <p class="text-muted font-14 mt-2"> Un correo fue enviado a <b><?= $email ?></b>.
                         Por favor verifique su bandeja de correo y complete su registro. </p>
 
-                    <a href="<?= base_url() ?>" class="btn btn-md btn-block btn-custom waves-effect waves-light mt-3">Regresar al inicio</a>
+                    <a href="<?= base_url() ?>" onclick="block()" class="btn btn-md btn-block btn-custom waves-effect waves-light mt-3">Regresar al inicio</a>
                 </div>
 
             </div>
@@ -72,3 +72,9 @@
 
     </div>
 </div>
+
+<script>
+    function block() {
+        <?= Block() ?>
+    }
+</script>

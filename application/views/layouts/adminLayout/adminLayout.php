@@ -19,6 +19,17 @@
     <link href="<?= base_url('resources/assets/css/style.css') ?>" rel="stylesheet" type="text/css" />
 
     <script src="<?= base_url('resources/assets/js/modernizr.min.js') ?>"></script>
+    <!-- jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="<?= base_url('resources/assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= base_url('resources/assets/js/metisMenu.min.js') ?>"></script>
+    <script src="<?= base_url('resources/assets/js/waves.js') ?>"></script>
+    <script src="<?= base_url('resources/assets/js/jquery.slimscroll.js') ?>"></script>
+
+    <!-- App js -->
+    <script src='https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js'></script>
+    <script src="<?= base_url('resources/assets/js/jquery.core.js') ?>"></script>
+    <script src="<?= base_url('resources/assets/js/jquery.app.js') ?>"></script>
 
 </head>
 
@@ -35,7 +46,7 @@
 
                 <!-- LOGO -->
                 <div class="topbar-left">
-                    <a href="index.html" class="logo">
+                    <a href="<?= base_url() ?>" class="logo">
                         <span>
                             <img src="<?= base_url('resources/assets/images/logo.png') ?>" alt="" height="22">
                         </span>
@@ -62,8 +73,8 @@
                         <!--<li class="menu-title">Navigation</li>-->
 
                         <li>
-                            <a href="<?= base_url('inicio') ?>">
-                                <i class="fi-air-play"></i><span class="badge badge-danger badge-pill float-right">7</span> <span> Inicio </span>
+                            <a href="<?= base_url('inicio') ?>" onclick="block()">
+                                <i class="fi-air-play"></i> <span> Inicio </span>
                             </a>
                         </li>
 
@@ -121,7 +132,7 @@
                                 </a>
 
                                 <!-- item-->
-                                <a href="<?= base_url('CAuth/cerrarSesion') ?>" class="dropdown-item notify-item">
+                                <a href="<?= base_url('CAuth/cerrarSesion') ?>" class="dropdown-item notify-item" onclick="block()">
                                     <i class="fi-power"></i> <span>Cerrar sesión</span>
                                 </a>
 
@@ -181,19 +192,16 @@
     </div>
     <!-- END wrapper -->
 
-
-
-    <!-- jQuery  -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="<?= base_url('resources/assets/js/bootstrap.bundle.min.js') ?>"></script>
-    <script src="<?= base_url('resources/assets/js/metisMenu.min.js') ?>"></script>
-    <script src="<?= base_url('resources/assets/js/waves.js') ?>"></script>
-    <script src="<?= base_url('resources/assets/js/jquery.slimscroll.js') ?>"></script>
-
-    <!-- App js -->
-    <script src="<?= base_url('resources/assets/js/jquery.core.js') ?>"></script>
-    <script src="<?= base_url('resources/assets/js/jquery.app.js') ?>"></script>
-
 </body>
+<script>
+    <?= Block('show') ?>
+    $(document).ready(function() {
+        <?= Block('hide') ?>
+    });
+
+    function block() {
+        <?= Block('show') ?>
+    }
+</script>
 
 </html>

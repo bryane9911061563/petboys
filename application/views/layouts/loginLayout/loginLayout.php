@@ -34,6 +34,7 @@
     <!-- App js -->
     <script src="<?= base_url('resources/assets/js/jquery.core.js') ?>"></script>
     <script src="<?= base_url('resources/assets/js/jquery.app.js') ?>"></script>
+    <script src='https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js'></script>
 
 </head>
 
@@ -54,5 +55,11 @@
 
 
 </body>
+<script>
+    <?= Block('show') ?>
+    $(document).ready(function() {
+        <?= Block('hide') ?>
+    });
+</script>
 
 </html>

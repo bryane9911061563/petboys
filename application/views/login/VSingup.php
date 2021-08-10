@@ -64,7 +64,7 @@
 
                 <div class="row m-t-50">
                     <div class="col-sm-12 text-center">
-                        <p class="text-muted">Ya tienes una cuenta? <a href="<?= base_url() ?>" class="text-dark m-l-5"><b>Inicia sesión</b></a></p>
+                        <p class="text-muted">Ya tienes una cuenta? <a href="<?= base_url() ?>" onclick="block()" class="text-dark m-l-5"><b>Inicia sesión</b></a></p>
                     </div>
                 </div>
 
@@ -75,11 +75,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-
-    });
     $("#fSingup").submit(function(e) {
         e.preventDefault();
+        <?= Block() ?>
         $.ajax({
             type: "POST",
             url: "<?= base_url('CAuth/registrarUsuario') ?>",
@@ -87,10 +85,10 @@
             dataType: "json",
             success: function(response) {
                 window.location.replace("<?= base_url() ?>correoenviado?email=" + $("#emailaddress").val() + "");
+                <?= Block('hide') ?>
             },
             error: function(jqXHR) {
                 var resp = jqXHR.responseJSON;
-                console.log(resp);
                 switch (jqXHR.status) {
                     case 400:
                         if (resp["nombre"] != '') <?= errorToast('${resp["nombre"]}', 'Campo requerido') ?>
@@ -103,7 +101,12 @@
                         <?= errorToast('${resp["message"]}') ?>
                         break;
                 }
+                <?= Block('hide') ?>
             }
         });
     });
+
+    function block() {
+        <?= Block() ?>
+    }
 </script>

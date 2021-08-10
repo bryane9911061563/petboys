@@ -50,12 +50,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-
-    });
-
     $("#fLogin").submit(function(e) {
         e.preventDefault();
+        <?= Block() ?>
         $.ajax({
             type: "POST",
             url: "<?= base_url('CAuth/finalizarRegistro') ?>",
@@ -69,6 +66,7 @@
                     icon: 'success'
                 })
                 window.location.replace("<?= base_url('inicio') ?>");
+                <?= Block('hide') ?>
             },
             error: function(jqXHR) {
                 var resp = jqXHR.responseJSON;
@@ -85,7 +83,12 @@
                         <?= errorToast('${resp["message"]}') ?>
                         break;
                 }
+                <?= Block('hide') ?>
             }
         });
     });
+
+    function block() {
+        <?= Block() ?>
+    }
 </script>
